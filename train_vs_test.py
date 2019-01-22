@@ -23,7 +23,6 @@ import matplotlib
 import matplotlib.pyplot as plt 
 from scipy.stats import kurtosis, skew
 from matplotlib.patches import Rectangle
-
 from permutation_test import *
 
 dataset_name = 'sst'
@@ -67,7 +66,9 @@ def make_data(dataset_name):
 def train(args):
 	model_name = args.model_name
 	data_model = dataset_name + model_name
+
 	assert model_name in ['cnn', 'lstm']
+
 	x_train, y_train, x_train_raw, x_test, y_test, x_test_raw = make_data(dataset_name)
 	model = TextModel(model_name, dataset_name, train = True)
 	model.pred_model.save_weights(data_model + '/models/train_vs_test-000.h5')
@@ -164,6 +165,7 @@ def compute_loss(args):
 			train_loss, _ = model.pred_model.evaluate(x_train, y_train, verbose=0)
 			val_loss, _ = model.pred_model.evaluate(x_test, y_test, verbose=0)
 			K.clear_session()
+
 		elif model_name == 'bert':
 			checkpoint = './bert/models/sst_train_vs_test/model.ckpt-{}'.format(int(model_id * 205))
 
@@ -183,6 +185,7 @@ def compute_loss(args):
 			tf.reset_default_graph()
 
 		losses[model_id] = [train_loss, val_loss]
+
 		print('Train loss {:0.2f}; Val loss: {:0.2f}.'.format(train_loss, val_loss))
 
 	with open('{}/results/losses.pkl'.format(data_model), 'wb') as f:
@@ -208,6 +211,7 @@ def compute_variance(args):
 
 			interactions = []
 			LS_scores = []
+
 			for i, info in enumerate(all_info):
 				phis_word, node_to_d, nodes, full, adj_lists, predicted, correct = info
 				score = [val[0] for val in node_to_d.values()]
@@ -234,6 +238,7 @@ def permutation_test_for_variance(args):
 			np.round(p_value, 4)))
 		print('-----------------------------')
 		pvals[model_id] = p_value
+		
 	with open('{}/results/pvals.pkl'.format(data_model), 'wb') as f:
 		pkl.dump(pvals, f)
 
