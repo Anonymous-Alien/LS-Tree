@@ -34,6 +34,7 @@ java -mx4g -cp '*' edu.stanford.nlp.pipeline.StanfordCoreNLPServer -preload toke
 ## Training of BERT.
 For replicating experiments related to BERT, please follow the steps to download and train the model first:
 
+Download and unzip the pre-trained BERT model.
 ```shell
 ###############################################
 # Cd to the target directory. 
@@ -43,15 +44,23 @@ cd bert/models/
 wget https://storage.googleapis.com/bert_models/2018_10_18/uncased_L-12_H-768_A-12.zip
 # Unzip.
 unzip uncased_L-12_H-768_A-12.zip -d ./
+###############################################
+```
 
-# Training for evaluation of average depth and linear correlation.
+Train a BERT for the evaluation of average depth and linear correlation.
+```shell
+###############################################
 cd bert/
 export BERT_BASE_DIR=models/uncased_L-12_H-768_A-12
 mkdir models/sst_output
 python run_classifier.py   --task_name=SST-2   --do_train=true   --do_eval=true   --data_dir=glue_data/SST-2   --vocab_file=$BERT_BASE_DIR/vocab.txt   --bert_config_file=$BERT_BASE_DIR/bert_config.json   --init_checkpoint=$BERT_BASE_DIR/bert_model.ckpt   --max_seq_length=128   --train_batch_size=32   --learning_rate=2e-5   --num_train_epochs=3.0   --output_dir=models/sst_output/ 
+###############################################
+```
 
 
-# Training for the experiment of overfitting.
+Train BERT and save every epoch for the experiment of overfitting.
+```shell
+###############################################
 cd bert/ 
 export BERT_BASE_DIR=models/uncased_L-12_H-768_A-12
 mkdir models/sst_train_vs_test
