@@ -23,7 +23,7 @@ Download Stanford Parser is required for all experiments. The following is an ex
 # Download from source.
 wget http://nlp.stanford.edu/software/stanford-corenlp-full-2018-02-27.zip
 # Unzip.
-unzip stanford-corenlp-full-2018-02-27.zip -d stanford-corenlp-full-2018-02-27/
+unzip stanford-corenlp-full-2018-02-27.zip -d ./
 
 # Run the parser in the background.
 cd stanford-corenlp-full-2018-02-27
