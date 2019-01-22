@@ -1,4 +1,4 @@
-# LS-Tree: Feature Attribution and Interaction Detection for NLP Models
+# LS-Tree: Model Interpretation When the Data Are Linguistic
 
 Code for replicating the experiments.
 
